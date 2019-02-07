@@ -45,7 +45,7 @@ class HG_API
     }
     
 
-    
+
     function dollar_quotation()
 	{
 		$data = $this->request('finance/quotations');
@@ -61,7 +61,25 @@ class HG_API
 			$this->error = TRUE;
 			return TRUE;
 		}
-	}
+    }
+    
+
+    
+	function euro_quotation()
+	{
+		$data = $this->request('finance/quotations');
+
+		if(!empty($data) && is_array($data['results']['currencies']['EUR'])){
+			$this->error = FALSE;
+			return $data['results']['currencies']['EUR'];
+
+		} 
+		else
+		{
+			$this->error = TRUE;
+			return TRUE;
+		}
+	}	
 
 
 }
