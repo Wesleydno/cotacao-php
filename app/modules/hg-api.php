@@ -36,7 +36,15 @@ class HG_API
 			return FALSE;
 		}
 
-	}
+    }
+    
+
+    function is_error()
+	{
+		return $this->error;
+    }
+    
+    
 
 }
 
