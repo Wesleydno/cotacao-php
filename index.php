@@ -1,3 +1,21 @@
+<?php
+
+require_once 'app/config/config.php';
+require_once 'app/modules/hg-api.php';
+
+$hg      = new HG_API(HG_API_KEY);
+$dollar  = $hg->dollar_quotation();  //Dollar
+$euro    = $hg->euro_quotation();    //Euro
+$libra   = $hg->libra_quotation();   //Pound Sterling
+$peso    = $hg->peso_quotation();    //Argentine Peso
+
+if ($hg->is_error() == false):
+	$dollar_variation = ($dollar['variation'] < 0 ? 'down' : 'up');
+	$euro_variation   = ($euro['variation']   < 0 ? 'down' : 'up');
+	$libra_variation  = ($libra['variation']  < 0 ? 'down' : 'up');
+	$peso_variation   = ($peso['variation']   < 0 ? 'down' : 'up');
+endif;
+?>
 <!doctype html>
 <html lang="pt-br">
   <head>
@@ -30,12 +48,18 @@
       			<div class="card-header">
       				<h4 class="my-0 font-weight-normal">USD Dólar</h4>
       			</div>
+      			<?php if ($hg->is_error() == false): ?>
       			<div class="card-body">
-      				<h4 class="card-title pricing-card-title"></h4>
+      				<h4 class="card-title pricing-card-title"><i class="fa fa-chevron-<?php echo ($dollar_variation); ?>"></i> R$ <?php echo (number_format($dollar['buy'],3, ',', '.')); ?></h4>
       				<ul class="list-unstyled mt-3 mb-4">
-      					<li class="variation-color"></li>
+      					<li class="variation-color"><p class="<?php echo ($dollar_variation); ?>"><?php echo $dollar['variation']; ?> %</p></li>
       				</ul>
       			</div>
+      		    <?php else: ?>
+      		    <div class="card-body">
+      		        <p><span class="badge badge-pill badge-danger">Serviço Indisponível</span></p>   	
+      		    </div>	
+      		<?php endif; ?>
       		</div>
       	</div>
 
@@ -44,13 +68,18 @@
       			<div class="card-header">
       				<h4 class="my-0 font-weight-normal">EUR Euro</h4>
       			</div>
-      			
+      			<?php if ($hg->is_error() == false): ?>
       			<div class="card-body">
-      				<h4 class="card-title pricing-card-title"></h4>
+      				<h4 class="card-title pricing-card-title"><i class="fa fa-chevron-<?php echo ($euro_variation); ?>"></i> R$ <?php echo (number_format($euro['buy'],3, ',', '.')); ?></h4>
       				<ul class="list-unstyled mt-3 mb-4">
-      					<li class="variation-color"></li>
+      					<li class="variation-color"><p class="<?php echo ($euro_variation); ?>"><?php echo $euro['variation']; ?> %</p></li>
       				</ul>
       			</div>
+      		    <?php else: ?>
+      		    <div class="card-body">
+      		        <p><span class="badge badge-pill badge-danger">Serviço Indisponível</span></p>   	
+      		    </div>	
+      		<?php endif; ?>
       		</div>
       	</div>
 
@@ -59,13 +88,18 @@
       			<div class="card-header">
       				<h4 class="my-0 font-weight-normal">GBP Libra</h4>
       			</div>
-      		
+      			<?php if ($hg->is_error() == false): ?>
       			<div class="card-body">
-      				<h4 class="card-title pricing-card-title"></h4>
+      				<h4 class="card-title pricing-card-title"><i class="fa fa-chevron-<?php echo ($libra_variation); ?>"></i> R$ <?php echo (number_format($libra['buy'],3, ',', '.')); ?></h4>
       				<ul class="list-unstyled mt-3 mb-4">
-      					<li class="variation-color"></li>
+      					<li class="variation-color"><p class="<?php echo ($libra_variation); ?>"><?php echo $libra['variation']; ?> %</p></li>
       				</ul>
-      			</div> 
+      			</div>
+      		    <?php else: ?>
+      		    <div class="card-body">
+      		        <p><span class="badge badge-pill badge-danger">Serviço Indisponível</span></p>   	
+      		    </div>	
+      		<?php endif; ?>
       		</div>
       	</div>
 
@@ -74,13 +108,18 @@
       			<div class="card-header">
       				<h4 class="my-0 font-weight-normal">ARS Peso</h4>
       			</div>
-      		
+      			<?php if ($hg->is_error() == false): ?>
       			<div class="card-body">
-      				<h4 class="card-title pricing-card-title"></h4>
+      				<h4 class="card-title pricing-card-title"><i class="fa fa-chevron-<?php echo ($peso_variation); ?>"></i> R$ <?php echo (number_format($peso['buy'],3, ',', '.')); ?></h4>
       				<ul class="list-unstyled mt-3 mb-4">
-      					<li class="variation-color"></li>
+      					<li class="variation-color"><p class="<?php echo ($peso_variation); ?>"><?php echo $peso['variation']; ?> %</p></li>
       				</ul>
-      			</div>	
+      			</div>
+      		    <?php else: ?>
+      		    <div class="card-body">
+      		        <p><span class="badge badge-pill badge-danger">Serviço Indisponível</span></p>   	
+      		    </div>	
+      		<?php endif; ?>
       		</div>
       	</div>
       </div>
