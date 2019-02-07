@@ -98,7 +98,21 @@ class HG_API
 		}
 	}	
 
+	function peso_quotation() //Argentine Peso
+	{
+		$data = $this->request('finance/quotations');
 
+		if(!empty($data) && is_array($data['results']['currencies']['ARS'])){
+			$this->error = FALSE;
+			return $data['results']['currencies']['ARS'];
+
+		}
+		else 
+		{
+			$this->error = TRUE;
+			return TRUE;
+		}
+	}	
 
 }
 
