@@ -82,6 +82,24 @@ class HG_API
 	}	
 
 
+    function libra_quotation()  //Pound Sterling
+	{
+		$data = $this->request('finance/quotations');
+
+		if(!empty($data) && is_array($data['results']['currencies']['GBP'])){
+			$this->error = FALSE;
+			return $data['results']['currencies']['GBP'];
+
+		} 
+		else 
+		{
+			$this->error = TRUE;
+			return TRUE;
+		}
+	}	
+
+
+
 }
 
 
